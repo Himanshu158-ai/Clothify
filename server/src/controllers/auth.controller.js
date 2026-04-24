@@ -6,14 +6,14 @@ import bcrypt from "bcrypt";
 
 export const registerUser = async (req,res) => {
     try{
-        const {fullName,email,password,contact} = req.body;
+        const {name,email,password,contact} = req.body;
         const userExists = await User.findOne({email});
         if(userExists){
             return res.status(400).json({message:"User already exists"});
         }
         const hashedPassword = await bcrypt.hash(password,10);
         const user = await User.create({
-            fullName,
+            name,
             email,
             password:hashedPassword,
             contact
@@ -22,7 +22,7 @@ export const registerUser = async (req,res) => {
         res.cookie("token",token,{httpOnly:true,maxAge:2*24*60*60*1000});
         res.status(201).json({user:{
             _id:user._id,
-            fullName:user.fullName,
+            name:user.name,
             email:user.email,
             contact:user.contact
         },message:"User created successfully",token});
@@ -47,7 +47,7 @@ export const loginUser = async (req,res) => {
         res.cookie("token",token,{httpOnly:true,maxAge:2*24*60*60*1000});
         res.status(200).json({user:{
             _id:user._id,
-            fullName:user.fullName,
+            name:user.name,
             email:user.email,
             contact:user.contact
         },message:"User logged in successfully",token});
