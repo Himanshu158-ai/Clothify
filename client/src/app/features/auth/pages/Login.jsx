@@ -11,10 +11,14 @@ const Login = () => {
   const handleSubmit = async(e) => {
     e.preventDefault();
     const result = await handelLogin({ email, password });
-    console.log('Login attempt with:', { email });
     if (result) {
       navigate("/");
     }
+  };
+
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:3000/api/auth/google";
   };
 
   return (
@@ -99,6 +103,7 @@ const Login = () => {
               </button>
 
               <button
+              onClick={handleGoogleLogin}
                 type="button"
                 className="group relative flex w-full items-center justify-center gap-3 overflow-hidden border border-neutral-300 bg-transparent px-3 py-4 text-sm font-semibold uppercase tracking-widest text-neutral-900 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
               >

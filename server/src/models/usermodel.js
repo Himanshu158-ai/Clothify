@@ -22,6 +22,11 @@ const UserSchema = new mongoose.Schema({
         type:String,
         enum:["buyer","seller"],
         default:"buyer",
+    },
+    authProvider:{
+        type:String,
+        enum:["google", "email"],
+        default:"email"
     }
 
 }); 

@@ -11,7 +11,7 @@ export const useAuth = () => {
         try {
             dispatch(setLoading(true))
             const data = await registerUser({ email, contactNo, password, name })
-            dispatch(setUser(data))
+            dispatch(setUser(data.user))
             return data
         }
         catch (error) {
@@ -26,7 +26,7 @@ export const useAuth = () => {
         try {
             dispatch(setLoading(true))
             const data = await loginUser({ email, password })
-            dispatch(setUser(data))
+            dispatch(setUser(data.user))
             return data
         }
         catch (error) {
