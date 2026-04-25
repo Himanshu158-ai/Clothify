@@ -13,7 +13,7 @@ export const validateRegister = [
     .isLength({min:3,max:50}).withMessage("Name must be between 3 and 50 characters long"),
     body("email").isEmail().withMessage("Invalid Email"),
     body("password").isLength({min:6}).withMessage("Password must be at least 6 characters long"),
-    body("contact").isLength({min:10,max:10}).withMessage("Contact must be 10 digits long"),
+    body("contactNo").isLength({min:10,max:10}).withMessage("Contact must be 10 digits long"),
     validate
 ]
 

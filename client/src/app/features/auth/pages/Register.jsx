@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth'
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate()
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [contactNo, setContactNo] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const { handelRegister } = useAuth()
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Register attempt with:', { name, email, contactNo, password });
+    const result = await handelRegister({ email, contactNo, password, name });
+    if (result) {
+      navigate("/");
+    }
   };
 
   return (
@@ -29,7 +36,7 @@ const Register = () => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-5">
-              
+
               {/* Name Field */}
               <div>
                 <label

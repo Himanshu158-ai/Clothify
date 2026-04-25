@@ -6,7 +6,11 @@ import authRouter from "./src/routes/auth.route.js"
 import dbConnect from "./src/config/db.js"
 const app = express();
 
-app.use(cors());
+
+app.use(cors({
+    origin: 'http://localhost:5174',
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 dbConnect();

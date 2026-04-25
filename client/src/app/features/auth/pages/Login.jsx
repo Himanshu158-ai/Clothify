@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../hooks/useAuth';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const { handelLogin } = useAuth()
+  const navigate = useNavigate()
+  const handleSubmit = async(e) => {
     e.preventDefault();
-    console.log('Login attempt with:', { email, password });
+    const result = await handelLogin({ email, password });
+    console.log('Login attempt with:', { email });
+    if (result) {
+      navigate("/");
+    }
   };
 
   return (
