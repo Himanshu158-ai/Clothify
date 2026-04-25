@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-if(!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET|| !process.env.PORT|| !process.env.DB_URI || !process.env.JWT_SECRET){
+if(!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET|| !process.env.PORT|| !process.env.DB_URI || !process.env.JWT_SECRET|| !process.env.BACKEND_URL){
     throw new Error("One or more environment variables not defined in .env file!");
 }
 
@@ -11,4 +11,5 @@ export const config={
     google_client_secret: process.env.GOOGLE_CLIENT_SECRET,
     dbUrl:process.env.DB_URI,
     jwt_secret: process.env.JWT_SECRET,
+    backend_url:process.env.BACKEND_URL
 }

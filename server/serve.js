@@ -4,17 +4,24 @@ import cookieParser from "cookie-parser";
 import { config } from "./src/config/config.js"
 import authRouter from "./src/routes/auth.route.js"
 import dbConnect from "./src/config/db.js"
+import passport from "./src/config/passport.js";
+
 const app = express();
 
+// Passport initialization
+app.use(passport.initialize());
 
+// CORS configuration
 app.use(cors({
-    origin: 'http://localhost:5174',
+    origin: 'http://localhost:5173',
     credentials: true
 }));
+
+// Body parsing middleware
 app.use(express.json());
 app.use(cookieParser());
 dbConnect();
-app.use("/api/auth",authRouter);
+app.use("/api",authRouter);
 
 
 app.listen(config.port,() => {

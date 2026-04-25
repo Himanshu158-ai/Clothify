@@ -69,3 +69,21 @@ export const getProfile = async (req,res) => {
         res.status(500).json({message:"Internal server error"+err.message});
     }
 }
+
+export const continueWithGoogle = async (req,res) => {
+    try{
+        const user = await User.findOne({email:req.user.emails[0].value});
+        if(!user){
+            const user = await User.create({
+                name: req.user.displayName,
+                email: req.user.emails[0].value,
+            })
+        }
+        const token = jwt.sign({id:user._id},config.jwt_secret,{expiresIn:'2d'});
+        res.cookie("token",token,{httpOnly:true,maxAge:2*24*60*60*1000});
+        res.redirect("http://localhost:5173/login");
+    }
+    catch(err){
+        res.status(500).json({message:"Internal server error"+err.message});
+    }
+}

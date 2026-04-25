@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const Register = () => {
   const navigate = useNavigate()
@@ -17,6 +18,15 @@ const Register = () => {
     if (result) {
       navigate("/");
     }
+  };
+  const handleGoogleAuth = async () => {
+    // try {
+    //   const result = await axios.get("http://localhost:3000/api/auth/google",{withCredentials:true})
+    //   console.log(result)
+    // } catch (error) {
+    //   console.log(error)
+    // }
+    window.location.href="http://localhost:3000/api/auth/google";
   };
 
   return (
@@ -138,6 +148,7 @@ const Register = () => {
               </button>
 
               <button
+                onClick={handleGoogleAuth}
                 type="button"
                 className="group relative flex w-full items-center justify-center gap-3 overflow-hidden border border-neutral-300 bg-transparent px-3 py-4 text-sm font-semibold uppercase tracking-widest text-neutral-900 transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900"
               >

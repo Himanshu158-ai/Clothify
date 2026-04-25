@@ -7,16 +7,16 @@ const UserSchema = new mongoose.Schema({
     },
     contactNo: {
         type: String,
-        required: true,
+        required: false,
     },
     email: {
         type: String,
-        required: true,
+        required: false,
         unique: true
     },
     password: {
         type: String,
-        required: true
+        required: false
     },
     role:{
         type:String,
