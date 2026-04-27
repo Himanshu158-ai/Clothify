@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useProduct } from '../hooks/useProduct';
 
 const ProductCreate = () => {
+    const {handelCreateProduct,loading,error} = useProduct();
     const [formData, setFormData] = useState({
         name: '',
         description: '',

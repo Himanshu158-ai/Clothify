@@ -2,13 +2,16 @@ import axios from "axios";
 
 const instance = axios.create({
     baseURL: "http://localhost:3000/api/product",
-    withCredentials: true
+    headers: {
+        "Content-Type": "multipart/form-data"
+    },
+    credentials: "include"
 })
 
 
-export const createProduct = async (product) => {
+export const createProduct = async (data) => {
     try {
-        const response = await instance.post("/",product);
+        const response = await instance.post("/",data);
         return response.data;
     } catch (error) {
         if(error.response?.data?.errors){
@@ -17,3 +20,15 @@ export const createProduct = async (product) => {
         throw error.response?.data?.message || error.message;
     }
 }   
+
+export const getAllProducts = async () => {
+    try {
+        const response = await instance.get("/");
+        return response.data;
+    } catch (error) {
+        if(error.response?.data?.errors){
+            throw error.response.data.errors.map(err => err.msg).join(", ");
+        }
+        throw error.response?.data?.message || error.message;
+    }
+}

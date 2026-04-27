@@ -6,6 +6,7 @@ import ProtectedRoute from '../components/authProtected'
 import { useDispatch } from 'react-redux'
 import { setUser } from './features/auth/state/auth.slice'
 import ProductCreate from './features/product/pages/ProductCreate'
+import AllProduct from './features/product/pages/AllProduct'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const App = () => {
           const data = await response.json();
           dispatch(setUser(data.user));
         }
-        else{
+        else {
           dispatch(setUser(null));
         }
       } catch (error) {
@@ -32,7 +33,7 @@ const App = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<h1 className='text-3xl'>Clothify</h1>} />
+      <Route path='/' element={<AllProduct />}></Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/product/create" element={<ProtectedRoute><ProductCreate /></ProtectedRoute>} />
