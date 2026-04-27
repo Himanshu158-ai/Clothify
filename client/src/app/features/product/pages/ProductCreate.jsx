@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProduct } from '../hooks/useProduct';
 import axios from 'axios';
 
 const ProductCreate = () => {
-    const { handelCreateProduct,loading,error} = useProduct();
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -70,7 +68,6 @@ const ProductCreate = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            // const res = await handelCreateProduct(data);
             console.log(res);
             if(res.status == 201){
                 navigate("/");
@@ -78,7 +75,6 @@ const ProductCreate = () => {
         } catch (error) {
             console.log(error)
         }
-        // TODO: Connect to backend
     };
 
     const nextSlide = () => {

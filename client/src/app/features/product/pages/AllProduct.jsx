@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {useProduct} from '../hooks/useProduct';
+import { Link } from 'react-router-dom';
+import { useProduct } from '../hooks/useProduct';
 
 const bannerImages = [
   "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80",
@@ -10,7 +11,7 @@ const bannerImages = [
 const AllProduct = () => {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const [mockProducts, setMockProducts] = useState([])
-  const { handelAllProducts } = useProduct()
+  const {handelAllProducts} = useProduct()
   // Banner Auto-Swipe Logic
   useEffect(() => {
     const interval = setInterval(() => {
@@ -34,6 +35,37 @@ const AllProduct = () => {
 
   return (
     <div className="min-h-screen bg-[#f9f9f9] font-sans text-[#1a1c1c]">
+      {/* Navbar */}
+      <nav className="sticky top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-white/95 backdrop-blur-md border-b border-[#eeeeee]">
+        {/* Left Side: Brand */}
+        <Link to="/" className="text-2xl tracking-widest uppercase font-bold text-[#1a1c1c]">
+          CLOTHIFY
+        </Link>
+
+        {/* Right Side: Links & Icons */}
+        <div className="flex items-center space-x-6 text-[#1a1c1c]">
+          <Link to="/product-create" className="text-[10px] sm:text-xs uppercase tracking-widest font-bold hover:text-[#A68A64] transition-colors">
+            Add Product
+          </Link>
+          
+          {/* Like Icon */}
+          <button aria-label="Wishlist" className="hover:text-[#A68A64] transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+
+          {/* Cart Icon */}
+          <button aria-label="Cart" className="hover:text-[#A68A64] transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+
       {/* Hero Banner Section */}
       <section className="relative w-full h-[60vh] md:h-[85vh] overflow-hidden bg-[#eeeeee]">
         {bannerImages.map((img, index) => (
@@ -81,7 +113,7 @@ const AllProduct = () => {
       {/* Products Section */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-8 pb-16 md:pt-12 md:pb-24">
         <div className="flex flex-col md:flex-row justify-between items-baseline mb-8 md:mb-10 border-b border-[#eeeeee] pb-4">
-          <h2 className="text-2xl md:text-3xl font-system-ui tracking-tight">Featured Products</h2>
+          <h2 className="text-2xl md:text-3xl font-serif tracking-tight">Featured Products</h2>
           <div className="text-xs uppercase tracking-[0.15em] text-[#777777] mt-4 md:mt-0">
             {mockProducts.length} Products
           </div>
