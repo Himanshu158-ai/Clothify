@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useProduct } from '../hooks/useProduct';
+import axios from 'axios';
 
 const ProductCreate = () => {
-    const {handelCreateProduct,loading,error} = useProduct();
+    const { handelCreateProduct,loading,error} = useProduct();
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -14,7 +15,7 @@ const ProductCreate = () => {
     });
     const [imagePreviews, setImagePreviews] = useState([]);
     const [currentSlide, setCurrentSlide] = useState(0);
-
+    const navigate = useNavigate();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -69,9 +70,13 @@ const ProductCreate = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             })
+            // const res = await handelCreateProduct(data);
             console.log(res);
+            if(res.status == 201){
+                navigate("/");
+            }
         } catch (error) {
-            console.log(error.response.data.message)
+            console.log(error)
         }
         // TODO: Connect to backend
     };

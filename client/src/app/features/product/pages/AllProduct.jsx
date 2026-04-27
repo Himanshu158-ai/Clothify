@@ -57,8 +57,9 @@ const AllProduct = () => {
         <div className="absolute inset-0 z-20 flex flex-col justify-end items-center pb-20 text-white px-4 text-center">
           <h1 className="text-5xl md:text-7xl font-serif tracking-tight mb-3">NEW ARRIVALS</h1>
           <p className="text-sm md:text-base tracking-[0.2em] uppercase mb-8 font-light">Elevate Your Everyday</p>
-          <button className="bg-white text-black px-10 py-4 uppercase text-xs tracking-widest font-bold hover:bg-gray-100 transition-colors duration-300">
-            Shop Collection
+          <button className="group relative overflow-hidden bg-white px-10 py-4 text-xs font-bold uppercase tracking-widest text-black transition-all duration-300 hover:text-white">
+            <span className="absolute inset-x-0 bottom-0 h-0 bg-[#A68A64] transition-all duration-300 ease-out group-hover:h-full"></span>
+            <span className="relative z-10 transition-colors duration-300">Shop Collection</span>
           </button>
         </div>
 
@@ -80,7 +81,7 @@ const AllProduct = () => {
       {/* Products Section */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-8 pb-16 md:pt-12 md:pb-24">
         <div className="flex flex-col md:flex-row justify-between items-baseline mb-8 md:mb-10 border-b border-[#eeeeee] pb-4">
-          <h2 className="text-2xl md:text-3xl font-system-ui tracking-tight">Your Store___</h2>
+          <h2 className="text-2xl md:text-3xl font-system-ui tracking-tight">Featured Products</h2>
           <div className="text-xs uppercase tracking-[0.15em] text-[#777777] mt-4 md:mt-0">
             {mockProducts.length} Products
           </div>
