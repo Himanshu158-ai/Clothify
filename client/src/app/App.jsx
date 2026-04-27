@@ -5,6 +5,7 @@ import Register from './features/auth/pages/Register'
 import ProtectedRoute from '../components/authProtected'
 import { useDispatch } from 'react-redux'
 import { setUser } from './features/auth/state/auth.slice'
+import ProductCreate from './features/product/pages/ProductCreate'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -31,9 +32,10 @@ const App = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<ProtectedRoute><h1 className='text-3xl'>Clothify</h1></ProtectedRoute>} />
+      <Route path="/" element={<h1 className='text-3xl'>Clothify</h1>} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/product/create" element={<ProtectedRoute><ProductCreate /></ProtectedRoute>} />
     </Routes>
   )
 }

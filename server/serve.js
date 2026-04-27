@@ -5,6 +5,7 @@ import { config } from "./src/config/config.js"
 import authRouter from "./src/routes/auth.route.js"
 import dbConnect from "./src/config/db.js"
 import passport from "./src/config/passport.js";
+import productRouter from "./src/routes/product.route.js";
 
 const app = express();
 
@@ -19,9 +20,11 @@ app.use(cors({
 
 // Body parsing middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 dbConnect();
 app.use("/api",authRouter);
+app.use("/api/product",productRouter);
 
 
 app.listen(config.port,() => {
