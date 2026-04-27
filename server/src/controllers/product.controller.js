@@ -2,7 +2,7 @@ import {imagekit} from "../middleware/image.middleware.js";
 import Product from "../models/productmodel.js";
 export const createProduct = async (req, res) => {
     try {
-        console.log(req.files);
+        // console.log(req.files);
         const uploadPromises = req.files.map(file =>
             imagekit.upload({
                 file: file.buffer,

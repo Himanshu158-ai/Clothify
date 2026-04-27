@@ -69,7 +69,7 @@ const ProductCreate = () => {
             })
             console.log(res);
         } catch (error) {
-            console.log(error)
+            console.log(error.response.data.message)
         }
         // TODO: Connect to backend
     };
