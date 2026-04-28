@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProduct } from '../hooks/useProduct';
+import { useNavigate } from 'react-router-dom';
 
 const bannerImages = [
   "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80",
@@ -11,7 +12,8 @@ const bannerImages = [
 const AllProduct = () => {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
   const [mockProducts, setMockProducts] = useState([])
-  const {handelAllProducts} = useProduct()
+  const { handelAllProducts } = useProduct()
+  const navigate = useNavigate();
   // Banner Auto-Swipe Logic
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,18 +22,23 @@ const AllProduct = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(()=>{
-    const getProducts = async()=>{
-      try{
+  useEffect(() => {
+    const getProducts = async () => {
+      try {
         const res = await handelAllProducts();
         // console.log(res.products);
         setMockProducts(res.products);
-      }catch(error){
+      } catch (error) {
         console.log(error)
       }
     }
     getProducts();
   }, [])
+
+  const handleProductClick = (product) => {
+    console.log(product);
+    navigate(`/view-product/${product._id}`)
+  }
 
   return (
     <div className="min-h-screen bg-[#f9f9f9] font-sans text-[#1a1c1c]">
@@ -47,7 +54,7 @@ const AllProduct = () => {
           <Link to="/product-create" className="text-[10px] sm:text-xs uppercase tracking-widest font-bold hover:text-[#A68A64] transition-colors">
             Add Product
           </Link>
-          
+
           {/* Like Icon */}
           <button aria-label="Wishlist" className="hover:text-[#A68A64] transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -71,20 +78,19 @@ const AllProduct = () => {
         {bannerImages.map((img, index) => (
           <div
             key={index}
-            className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-              index === currentBannerIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
+            className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${index === currentBannerIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
           >
-            <img 
-              src={img} 
-              alt={`Editorial Campaign ${index + 1}`} 
+            <img
+              src={img}
+              alt={`Editorial Campaign ${index + 1}`}
               className="w-full h-full object-cover object-top"
             />
             {/* Subtle Gradient Overlay for Text Readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10"></div>
           </div>
         ))}
-        
+
         {/* Banner Content */}
         <div className="absolute inset-0 z-20 flex flex-col justify-end items-center pb-20 text-white px-4 text-center">
           <h1 className="text-5xl md:text-7xl font-serif tracking-tight mb-3">NEW ARRIVALS</h1>
@@ -101,9 +107,8 @@ const AllProduct = () => {
             <button
               key={index}
               onClick={() => setCurrentBannerIndex(index)}
-              className={`h-[2px] transition-all duration-300 ${
-                index === currentBannerIndex ? 'w-12 bg-white' : 'w-6 bg-white/40'
-              }`}
+              className={`h-[2px] transition-all duration-300 ${index === currentBannerIndex ? 'w-12 bg-white' : 'w-6 bg-white/40'
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
@@ -122,19 +127,19 @@ const AllProduct = () => {
         {/* Product Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-12 md:gap-x-8 md:gap-y-16">
           {mockProducts.map((product) => (
-            <div key={product._id} className="group cursor-pointer flex flex-col">
+            <div onClick={() => handleProductClick(product)} key={product._id} className="group cursor-pointer flex flex-col">
               {/* Product Image Container */}
               <div className="relative w-full aspect-[3/4] bg-[#eeeeee] overflow-hidden mb-5">
-                <img 
-                  src={product.images[0]} 
-                  alt={product.name} 
+                <img
+                  src={product.images[0]}
+                  alt={product.name}
                   className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                 />
-                
+
                 {/* Secondary Image on Hover (using second image if available, else first) */}
                 {product.images[1] && (
-                  <img 
-                    src={product.images[1]} 
+                  <img
+                    src={product.images[1]}
                     alt={`${product.name} alternate view`}
                     className="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   />
@@ -166,9 +171,9 @@ const AllProduct = () => {
                   <h3 className="text-sm font-medium text-[#1a1c1c] leading-tight">{product.name}</h3>
                   <span className="text-sm text-[#1a1c1c]">₹{product.price.toLocaleString()}</span>
                 </div>
-                
+
                 <p className="text-xs text-[#777777] mb-4 uppercase tracking-wider">{product.category}</p>
-                
+
                 {/* Seller Info */}
                 <div className="mt-auto pt-3 border-t border-[#eeeeee]">
                   <div className="flex items-center gap-2">

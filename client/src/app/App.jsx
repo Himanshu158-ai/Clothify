@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { setUser } from './features/auth/state/auth.slice'
 import ProductCreate from './features/product/pages/ProductCreate'
 import AllProduct from './features/product/pages/AllProduct'
+import ViewProduct from './features/product/pages/ViewProduct'
 
 const App = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/product-create" element={<ProtectedRoute><ProductCreate /></ProtectedRoute>} />
+      <Route path="/view-product/:id" element={<ViewProduct />} />
     </Routes>
   )
 }
