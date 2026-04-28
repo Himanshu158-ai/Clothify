@@ -33,7 +33,7 @@ const App = () => {
 
   return (
     <Routes>
-      <Route path='/' element={<AllProduct />}></Route>
+      <Route path="/" element={<AllProduct />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/product-create" element={<ProtectedRoute><ProductCreate /></ProtectedRoute>} />

@@ -38,7 +38,7 @@ const AllProduct = () => {
       {/* Navbar */}
       <nav className="sticky top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-white/95 backdrop-blur-md border-b border-[#eeeeee]">
         {/* Left Side: Brand */}
-        <Link to="/" className="text-2xl tracking-widest uppercase font-bold text-[#1a1c1c]">
+        <Link to="/" className="text-xl tracking-widest uppercase font-bold text-[#1a1c1c]">
           CLOTHIFY
         </Link>
 
@@ -113,7 +113,7 @@ const AllProduct = () => {
       {/* Products Section */}
       <section className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-8 pb-16 md:pt-12 md:pb-24">
         <div className="flex flex-col md:flex-row justify-between items-baseline mb-8 md:mb-10 border-b border-[#eeeeee] pb-4">
-          <h2 className="text-2xl md:text-3xl font-serif tracking-tight">Featured Products</h2>
+          <h2 className="text-2xl md:text-4xl font-serif tracking-tight">Featured Products <span>→</span></h2>
           <div className="text-xs uppercase tracking-[0.15em] text-[#777777] mt-4 md:mt-0">
             {mockProducts.length} Products
           </div>

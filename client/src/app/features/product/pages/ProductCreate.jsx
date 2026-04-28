@@ -86,6 +86,7 @@ const ProductCreate = () => {
     };
 
     return (
+        
         <div className="flex h-screen bg-white overflow-hidden">
             {/* Form Section */}
             <div className="flex w-full flex-col justify-start py-12 px-6 lg:w-[60%] lg:px-16 xl:px-24 overflow-y-auto h-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
