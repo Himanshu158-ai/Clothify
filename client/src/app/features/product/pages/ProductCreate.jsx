@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const ProductCreate = () => {
     const [formData, setFormData] = useState({
@@ -23,7 +24,7 @@ const ProductCreate = () => {
         const files = Array.from(e.target.files);
 
         if (formData.images.length + files.length > 4) {
-            alert("You can only upload a maximum of 4 images.");
+            toast.warning("You can only upload a maximum of 4 images.");
             return;
         }
 
@@ -68,11 +69,12 @@ const ProductCreate = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            console.log(res);
             if(res.status == 201){
+                toast.success("Product created successfully!");
                 navigate("/");
             }
         } catch (error) {
+            toast.error(error.response?.data?.message || "Failed to create product");
             console.log(error)
         }
     };

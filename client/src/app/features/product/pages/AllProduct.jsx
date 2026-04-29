@@ -26,10 +26,11 @@ const AllProduct = () => {
     const getProducts = async () => {
       try {
         const res = await handelAllProducts();
-        // console.log(res.products);
-        setMockProducts(res.products);
+        if (res && res.products) {
+          setMockProducts(res.products);
+        }
       } catch (error) {
-        console.log(error)
+        // Error handled in useProduct hook
       }
     }
     getProducts();

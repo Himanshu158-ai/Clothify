@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {  getAllProducts } from "../services/api.service";
+import { toast } from "react-toastify";
 
 export const useProduct =() => {
     const [loading,setLoading] = useState(false)
@@ -12,6 +13,7 @@ export const useProduct =() => {
         }   
         catch (error) {
             setError(error)
+            toast.error(error || "Failed to load products");
         }
     }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -20,6 +21,7 @@ const ProductDetail = () => {
         setProduct(data);
         setSelectedImage(data.images[0]);
       } catch (error) {
+        toast.error(error.response?.data?.message || "Failed to load product details");
         console.log(error.message);
       }
     };
@@ -35,6 +37,7 @@ const ProductDetail = () => {
       </div>
     );
   }
+
 
   return (
     <div className="min-h-screen bg-[#f9f9f9] text-[#1a1c1c]">
