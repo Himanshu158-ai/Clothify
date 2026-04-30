@@ -2,12 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
+  const [quantity, setQuantity] = useState(1);
+  const navigate = useNavigate();
 
+
+  const handleAddToCart = async() => {
+      try{
+        const res = await axios.post("http://localhost:3000/api/cart/",{
+          productId:id,
+          quantity:quantity,
+        },{withCredentials:true});
+        
+        toast.success(res.data.message);
+      }
+      catch(error){
+        toast.error(error.response?.data?.message || "Failed to add to cart");
+        if(error.response.status === 401){
+          navigate("/login");
+        }
+      }
+      
+  }
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -93,22 +114,33 @@ const ProductDetail = () => {
 
           <div className="mb-8">
             <p className="text-xs uppercase tracking-widest mb-3">
-              Select Size
+              Quantity
             </p>
-            <div className="flex gap-3">
-              {["S", "M", "L", "XL"].map((size) => (
-                <button
-                  key={size}
-                  className="border border-[#ddd] px-4 py-2 text-sm hover:border-black transition"
-                >
-                  {size}
-                </button>
-              ))}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                disabled={quantity <= 1}
+                className="w-10 h-10 border border-[#ddd] flex items-center justify-center hover:border-black transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                -
+              </button>
+              <span className="text-lg w-8 text-center">{quantity}</span>
+              <button
+                onClick={() => setQuantity(q => Math.min(product.stock, q + 1))}
+                disabled={quantity >= product.stock}
+                className="w-10 h-10 border border-[#ddd] flex items-center justify-center hover:border-black transition disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                +
+              </button>
             </div>
           </div>
 
-          <button className="w-full bg-black text-white py-4 text-xs uppercase tracking-widest font-bold hover:bg-[#333] transition">
-            Add to Cart <span className="ml-1">→</span>
+          <button 
+            onClick={handleAddToCart}
+            disabled={product.stock === 0}
+            className="w-full bg-black text-white py-4 text-xs uppercase tracking-widest font-bold hover:bg-[#333] transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {product.stock === 0 ? "Out of Stock" : "Add to Cart"} <span className="ml-1">→</span>
           </button>
 
           <p className="text-xs text-[#777] mt-4">

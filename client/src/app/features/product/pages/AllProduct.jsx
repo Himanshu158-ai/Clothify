@@ -37,7 +37,6 @@ const AllProduct = () => {
   }, [])
 
   const handleProductClick = (product) => {
-    console.log(product);
     navigate(`/view-product/${product._id}`)
   }
 

@@ -6,6 +6,7 @@ import authRouter from "./src/routes/auth.route.js"
 import dbConnect from "./src/config/db.js"
 import passport from "./src/config/passport.js";
 import productRouter from "./src/routes/product.route.js";
+import cartRouter from "./src/routes/cart.route.js";
 
 const app = express();
 
@@ -25,6 +26,7 @@ app.use(cookieParser());
 dbConnect();
 app.use("/api",authRouter);
 app.use("/api/product",productRouter);
+app.use("/api/cart",cartRouter);
 
 
 app.listen(config.port,() => {
