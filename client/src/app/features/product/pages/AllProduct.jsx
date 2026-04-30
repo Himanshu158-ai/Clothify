@@ -74,7 +74,7 @@ const AllProduct = () => {
       </nav>
 
       {/* Hero Banner Section */}
-      <section className="relative w-full h-[60vh] md:h-[85vh] overflow-hidden bg-[#eeeeee]">
+      <section className="relative w-full h-[60vh] md:h-[75vh] overflow-hidden bg-[#eeeeee]">
         {bannerImages.map((img, index) => (
           <div
             key={index}
@@ -84,7 +84,7 @@ const AllProduct = () => {
             <img
               src={img}
               alt={`Editorial Campaign ${index + 1}`}
-              className="w-full h-full object-cover object-top"
+              className="w-full h-full object-cover object-center"
             />
             {/* Subtle Gradient Overlay for Text Readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10"></div>
