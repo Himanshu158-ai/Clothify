@@ -149,8 +149,8 @@ const CartProduct = () => {
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-12 pb-24">
 
         {/* Page Header */}
-        <div className="flex items-baseline justify-between border-b border-[#eeeeee] pb-6 mb-12">
-          <h1 className="font-serif text-4xl md:text-6xl font-normal tracking-tight">
+        <div className="flex items-baseline justify-between border-b border-[#eeeeee] pb-6 mb-5">
+          <h1 className="font-sans text-4xl md:text-5xl font-normal tracking-tight">
             Your Cart
           </h1>
           <span className="font-sans text-[10px] uppercase tracking-[0.25em] text-[#777777]">
