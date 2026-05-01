@@ -5,7 +5,7 @@ import verifyTokenCart from "../middleware/cart.middleware.js";
 const router = Router();
 
 router.post("/", verifyTokenCart, addToCart);
-// router.get("/", getCart);
+// router.get("/", getAllCart);
 // router.put("/:id", updateCart);
 // router.delete("/:id", deleteCart);
 
