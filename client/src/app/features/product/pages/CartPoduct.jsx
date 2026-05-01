@@ -16,7 +16,8 @@ const CartProduct = () => {
       const res = await axios.get('http://localhost:3000/api/cart/', {
         withCredentials: true,
       });
-      setCartItems(res.data.cart?.items || []);
+      console.log(res.data.items);
+      setCartItems(res.data.items || []);
     } catch (error) {
       if (error.response?.status === 401) {
         navigate('/login');
@@ -226,18 +227,6 @@ const CartProduct = () => {
                         {product.name}
                       </h3>
 
-                      {/* Seller */}
-                      <div className="flex items-center gap-1.5 mt-2">
-                        <div className="w-4 h-4 rounded-full bg-[#1a1c1c] flex items-center justify-center text-[8px] font-bold text-white shrink-0">
-                          {product?.userId?.name?.charAt(0).toUpperCase()}
-                        </div>
-                        <p className="text-[9px] text-[#777777] uppercase tracking-wider">
-                          By{' '}
-                          <span className="text-[#1a1c1c] font-semibold">
-                            {product?.userId?.name}
-                          </span>
-                        </p>
-                      </div>
 
                       {/* Low stock warning */}
                       {product.stock <= 3 && (
@@ -277,11 +266,11 @@ const CartProduct = () => {
                       {/* Item Total */}
                       <div className="text-right">
                         <p className="text-base md:text-lg font-medium text-[#1a1c1c]">
-                          ₹{itemTotal.toLocaleString()}
+                          ₹{product.price * item.quantity}
                         </p>
                         {item.quantity > 1 && (
                           <p className="text-[9px] text-[#777777] tracking-wider mt-0.5">
-                            ₹{product.price.toLocaleString()} each
+                            ₹{product.price} each
                           </p>
                         )}
                       </div>
@@ -364,9 +353,10 @@ const CartProduct = () => {
                 {/* Checkout CTA */}
                 <button
                   onClick={() => toast.info('Checkout coming soon')}
-                  className="w-full bg-[#1a1c1c] px-6 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-white transition-all duration-300 hover:bg-[#A68A64] mb-4"
+                  className="group relative w-full overflow-hidden bg-[#1a1c1c] px-6 py-4 text-[10px] font-bold uppercase tracking-[0.25em] text-white transition-colors duration-300 mb-4"
                 >
-                  Checkout →
+                  <span className="absolute inset-x-0 bottom-0 h-0 bg-[#A68A64] transition-all duration-300 ease-out group-hover:h-full" />
+                  <span className="relative z-10">Checkout →</span>
                 </button>
 
                 {/* Trust note */}
