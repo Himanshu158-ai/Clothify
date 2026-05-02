@@ -14,10 +14,8 @@ router.post('/login',validateLogin,loginUser);
 router.get('/profile',verifyToken,getProfile);
 router.post('/logout',logoutUser);
 
-
-
+// Google OAuth Routes
 router.get('/auth/google',passport.authenticate('google', { scope: ['profile', 'email'] }));
-
 router.get('/auth/google/callback',passport.authenticate('google', { session: false }),continueWithGoogle);
 
 

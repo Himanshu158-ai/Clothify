@@ -77,11 +77,12 @@ export const getProfile = async (req,res) => {
 
 export const logoutUser = async (req,res) => {
     try{
+        
         res.clearCookie("token");
-        res.status(200).json({message:"User logged out successfully"});
+        res.status(200).json({message:"User logged out successfully", success:true});
     }
     catch(err){
-        res.status(500).json({message:"Internal server error"+err.message});
+        res.status(500).json({message:"Internal server error"+err.message, success:false});
     }
 }
 

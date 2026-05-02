@@ -4,6 +4,9 @@ import { useProduct } from '../hooks/useProduct';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+// import { setUser } from '../../auth/authSlice';
 
 const bannerImages = [
   "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80",
@@ -19,6 +22,7 @@ const AllProduct = () => {
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   const handleMouseMove = (e) => {
     setMousePos({ x: e.clientX, y: e.clientY });
@@ -47,14 +51,13 @@ const AllProduct = () => {
 
   const logout = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/api/logout', { credentials: "include" }); 
-      console.log(res);
-      if (res.ok) {
+      const res = await axios.post('http://localhost:3000/api/logout', { credentials: "include" });
+
+      console.log(res.data);
+      if (res.data.success) {
         dispatch(setUser(null));
-        toast.success(res.message, { position: "top-right" });
+        toast.success(res.data.message, { position: "top-right" });
         navigate("/");
-      } else {
-        toast.error(res.message, { position: "top-right" });
       }
     } catch (error) {
       toast.error("Logout failed", { position: "top-right" });
@@ -80,6 +83,15 @@ const AllProduct = () => {
             Add Product
           </Link>
 
+          {/* cart */}
+          <Link to="/cart" aria-label="Cart" className="hover:text-[#A68A64] transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+          </Link>
+
           {/* login Icon */}
           {user ? (
             <button onClick={logout} aria-label="Logout" className="hover:text-[#A68A64] transition-colors cursor-pointer">
@@ -101,15 +113,6 @@ const AllProduct = () => {
               </svg>
             </Link>
           )}
-
-          {/* Cart Icon */}
-          <Link to="/cart" aria-label="Cart" className="hover:text-[#A68A64] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-          </Link>
 
         </div>
       </nav>
