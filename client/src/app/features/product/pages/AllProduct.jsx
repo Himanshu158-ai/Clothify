@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useProduct } from '../hooks/useProduct';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const bannerImages = [
   "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80",
@@ -14,6 +16,13 @@ const AllProduct = () => {
   const [mockProducts, setMockProducts] = useState([])
   const { handelAllProducts } = useProduct()
   const navigate = useNavigate();
+  const [hoveredProduct, setHoveredProduct] = useState(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const user = useSelector((state) => state.auth.user);
+
+  const handleMouseMove = (e) => {
+    setMousePos({ x: e.clientX, y: e.clientY });
+  };
   // Banner Auto-Swipe Logic
   useEffect(() => {
     const interval = setInterval(() => {
@@ -36,6 +45,22 @@ const AllProduct = () => {
     getProducts();
   }, [])
 
+  const logout = async () => {
+    try {
+      const res = await axios.post('http://localhost:3000/api/logout', { credentials: "include" }); 
+      console.log(res);
+      if (res.ok) {
+        dispatch(setUser(null));
+        toast.success(res.message, { position: "top-right" });
+        navigate("/");
+      } else {
+        toast.error(res.message, { position: "top-right" });
+      }
+    } catch (error) {
+      toast.error("Logout failed", { position: "top-right" });
+    }
+  }
+
   const handleProductClick = (product) => {
     navigate(`/view-product/${product._id}`)
   }
@@ -55,12 +80,27 @@ const AllProduct = () => {
             Add Product
           </Link>
 
-          {/* Like Icon */}
-          <button aria-label="Wishlist" className="hover:text-[#A68A64] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </svg>
-          </button>
+          {/* login Icon */}
+          {user ? (
+            <button onClick={logout} aria-label="Logout" className="hover:text-[#A68A64] transition-colors cursor-pointer">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          ) : (
+            <Link to="/login" aria-label="Login" className="hover:text-[#A68A64] transition-colors">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="1.5"
+                strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </Link>
+          )}
 
           {/* Cart Icon */}
           <Link to="/cart" aria-label="Cart" className="hover:text-[#A68A64] transition-colors">
@@ -128,7 +168,14 @@ const AllProduct = () => {
         {/* Product Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-12 md:gap-x-8 md:gap-y-16">
           {mockProducts.map((product) => (
-            <div onClick={() => handleProductClick(product)} key={product._id} className="group cursor-pointer flex flex-col">
+            <div
+              onClick={() => handleProductClick(product)}
+              key={product._id}
+              className="group cursor-pointer flex flex-col"
+              onMouseEnter={() => setHoveredProduct(product)}
+              onMouseLeave={() => setHoveredProduct(null)}
+              onMouseMove={handleMouseMove}
+            >
               {/* Product Image Container */}
               <div className="relative w-full aspect-[3/4] bg-[#eeeeee] overflow-hidden mb-5">
                 <img
@@ -191,6 +238,63 @@ const AllProduct = () => {
           ))}
         </div>
       </section>
+
+      {/* Floating Price Tag Tooltip */}
+      {hoveredProduct && (
+        <div
+          className="fixed z-[9999] pointer-events-none"
+          style={{
+            left: mousePos.x + 18,
+            top: mousePos.y - 12,
+          }}
+        >
+          <div
+            style={{
+              background: '#1a1c1c',
+              color: '#fff',
+              padding: '6px 14px',
+              fontSize: '11px',
+              fontWeight: '700',
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              boxShadow: '0 8px 32px rgba(0,0,0,0.22)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              whiteSpace: 'nowrap',
+              position: 'relative',
+            }}
+          >
+            {/* Price tag notch */}
+            <span
+              style={{
+                position: 'absolute',
+                left: '-8px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                width: 0,
+                height: 0,
+                borderTop: '8px solid transparent',
+                borderBottom: '8px solid transparent',
+                borderRight: '8px solid #1a1c1c',
+              }}
+            />
+            {/* Tag hole */}
+            <span
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: '#A68A64',
+                display: 'inline-block',
+                flexShrink: 0,
+              }}
+            />
+            <span style={{ color: '#A68A64', marginRight: '2px' }}>₹</span>
+            {hoveredProduct.price.toLocaleString()}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

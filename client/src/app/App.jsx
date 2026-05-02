@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Login from './features/auth/pages/Login'
 import Register from './features/auth/pages/Register'
 import ProtectedRoute from '../components/authProtected'
@@ -39,6 +39,8 @@ const App = () => {
       <Route path="/product-create" element={<ProtectedRoute><ProductCreate /></ProtectedRoute>} />
       <Route path="/view-product/:id" element={<ViewProduct />} />
       <Route path="/cart" element={<ProtectedRoute><CartProduct /></ProtectedRoute>} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+
     </Routes>
   )
 }

@@ -75,6 +75,16 @@ export const getProfile = async (req,res) => {
     }
 }
 
+export const logoutUser = async (req,res) => {
+    try{
+        res.clearCookie("token");
+        res.status(200).json({message:"User logged out successfully"});
+    }
+    catch(err){
+        res.status(500).json({message:"Internal server error"+err.message});
+    }
+}
+
 export const continueWithGoogle = async (req,res) => {
     try{
         let user = await User.findOne({email:req.user.emails[0].value});
