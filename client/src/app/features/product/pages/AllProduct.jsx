@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-// import { setUser } from '../../auth/authSlice';
+import { setUser } from '../../auth/state/auth.slice';
 
 const bannerImages = [
   "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80",
@@ -51,9 +51,9 @@ const AllProduct = () => {
 
   const logout = async () => {
     try {
-      const res = await axios.post('http://localhost:3000/api/logout', { credentials: "include" });
+      const res = await axios.post('http://localhost:3000/api/logout', {}, { withCredentials: true });
 
-      console.log(res.data);
+      console.log(res.data.success);
       if (res.data.success) {
         dispatch(setUser(null));
         toast.success(res.data.message, { position: "top-right" });
