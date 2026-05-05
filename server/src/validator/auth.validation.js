@@ -8,6 +8,7 @@ const validate = (req,res,next)=>{
     next()
 }
 
+//validate register
 export const validateRegister = [
     body("name").notEmpty().withMessage("Name is required")
     .isLength({min:3,max:50}).withMessage("Name must be between 3 and 50 characters long"),
@@ -17,6 +18,7 @@ export const validateRegister = [
     validate
 ]
 
+//validate login
 export const validateLogin = [
     body("email").isEmail().withMessage("Invalid Email"),
     body("password").isLength({min:6}).withMessage("Password must be at least 6 characters long"),

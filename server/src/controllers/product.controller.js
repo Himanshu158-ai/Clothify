@@ -1,5 +1,8 @@
 import {imagekit} from "../middleware/image.middleware.js";
 import Product from "../models/productmodel.js";
+
+
+//create product
 export const createProduct = async (req, res) => {
     try {
         // console.log(req.files);
@@ -31,6 +34,7 @@ export const createProduct = async (req, res) => {
     }
 }
 
+//get all products
 export const getAllProducts = async (req, res) => {
     try {
         const products = await Product.find().populate("userId", "name");
@@ -40,6 +44,7 @@ export const getAllProducts = async (req, res) => {
     }
 }
 
+//get product by id
 export const getProductById = async (req, res) => {
     try {
         const {id} = req.params;

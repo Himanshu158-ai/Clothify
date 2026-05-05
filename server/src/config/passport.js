@@ -8,8 +8,6 @@ passport.use(new GoogleStrategy({
   clientSecret: config.google_client_secret,
   callbackURL: `${config.backend_url}`,
 }, (accessToken, refreshToken, profile, done) => {
-  // Here, you would typically find or create a user in your database
-  // For this example, we'll just return the profile
   return done(null, profile);
 }));
 

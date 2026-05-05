@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { config } from "../config/config.js";
 import User from "../models/usermodel.js";
 
+//verify seller
 const isSeller = async (req, res, next) => {
     try {
         const token = req.cookies.token;

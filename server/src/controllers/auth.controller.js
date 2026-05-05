@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 
+//register user
 export const registerUser = async (req,res) => {
     try{
         const {name,email,password,contactNo} = req.body;
@@ -31,6 +32,7 @@ export const registerUser = async (req,res) => {
     }
 }
 
+//login user
 export const loginUser = async (req,res) => {
     try{
         const {email,password} = req.body;
@@ -58,6 +60,7 @@ export const loginUser = async (req,res) => {
     }
 }
 
+//get profile
 export const getProfile = async (req,res) => {
     try{
         const user = await User.findById(req.userId).select('-password');
@@ -75,6 +78,7 @@ export const getProfile = async (req,res) => {
     }
 }
 
+//logout user
 export const logoutUser = async (req,res) => {
     try{
         res.clearCookie("token", {
@@ -90,6 +94,7 @@ export const logoutUser = async (req,res) => {
     }
 }
 
+//continue with google
 export const continueWithGoogle = async (req,res) => {
     try{
         let user = await User.findOne({email:req.user.emails[0].value});

@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { config } from "../config/config.js";
 
+//verify token for cart routes
 const verifyTokenCart = (req, res, next) => {
     const token = req.cookies.token;
     if (!token) {

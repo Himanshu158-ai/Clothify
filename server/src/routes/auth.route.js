@@ -1,5 +1,4 @@
 import express from 'express'
-import jwt from 'jsonwebtoken';
 
 import {validateRegister,validateLogin} from '../validator/auth.validation.js';
 import { registerUser,loginUser , getProfile, continueWithGoogle, logoutUser} from '../controllers/auth.controller.js';
