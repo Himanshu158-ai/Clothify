@@ -28,7 +28,7 @@ app.use("/api",authRouter);
 app.use("/api/product",productRouter);
 app.use("/api/cart",cartRouter);
 
-
+//listner
 app.listen(config.port,() => {
     console.log(`Server running on port ${config.port}`)
 })
