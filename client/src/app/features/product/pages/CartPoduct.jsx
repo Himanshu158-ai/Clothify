@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import NavBar from '../../../../components/NavBar';
 const CartProduct = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updatingId, setUpdatingId] = useState(null);
   const navigate = useNavigate();
+
 
   /* ── Fetch cart ── */
   const fetchCart = async () => {
@@ -85,7 +86,14 @@ const CartProduct = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-[#f9f9f9] font-sans text-[#1a1c1c] flex flex-col">
-        <NavBar />
+        <NavBar
+          dynamicLinks={[
+            {
+              path: "/",
+              name: "Shop"
+            }
+          ]}
+        />
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <div className="w-8 h-px bg-[#A68A64] mx-auto mb-6 animate-pulse" />
@@ -102,7 +110,14 @@ const CartProduct = () => {
   if (!loading && cartItems.length === 0) {
     return (
       <div className="min-h-screen bg-[#f9f9f9] font-sans text-[#1a1c1c] flex flex-col">
-        <NavBar />
+        <NavBar
+          dynamicLinks={[
+            {
+              path: "/",
+              name: "Shop"
+            }
+          ]}
+        />
         <div className="flex-1 flex flex-col items-center justify-center px-6 py-24 text-center">
           <svg
             width="52"
@@ -142,7 +157,13 @@ const CartProduct = () => {
   /* ════ MAIN CART ════ */
   return (
     <div className="min-h-screen bg-[#f9f9f9] font-sans text-[#1a1c1c]">
-      <NavBar />
+      <NavBar
+        dynamicLinks={[
+          {
+            path: "/",
+            name: "Shop"
+          }
+        ]} />
 
       <main className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pt-12 pb-24">
 
@@ -170,9 +191,8 @@ const CartProduct = () => {
               return (
                 <div
                   key={product._id}
-                  className={`flex gap-6 md:gap-8 py-8 border-b border-[#eeeeee] transition-opacity duration-300 ${
-                    isUpdating ? 'opacity-50 pointer-events-none' : 'opacity-100'
-                  }`}
+                  className={`flex gap-6 md:gap-8 py-8 border-b border-[#eeeeee] transition-opacity duration-300 ${isUpdating ? 'opacity-50 pointer-events-none' : 'opacity-100'
+                    }`}
                 >
                   {/* Product Image */}
                   <div
@@ -402,52 +422,5 @@ const CartProduct = () => {
   );
 };
 
-/* ──────────────────────────────────────────────
-   NavBar — mirrors AllProduct.jsx exactly
-────────────────────────────────────────────── */
-const NavBar = () => (
-  <nav className="sticky top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-white/95 backdrop-blur-md border-b border-[#eeeeee]">
-    <Link
-      to="/"
-      className="text-xl tracking-widest uppercase font-bold text-[#1a1c1c]"
-    >
-      CLOTHIFY
-    </Link>
-
-    <div className="flex items-center space-x-6 text-[#1a1c1c]">
-      <Link
-        to="/"
-        className="text-[10px] sm:text-xs uppercase tracking-widest font-bold hover:text-[#A68A64] transition-colors"
-      >
-        Shop
-      </Link>
-
-      {/* Wishlist */}
-      <Link to="/login" aria-label="Login" className="hover:text-[#A68A64] transition-colors">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-        </svg>
-      </Link>
-
-      {/* Cart — gold accent (active page) */}
-      <Link to="/cart" aria-label="Cart" className="text-[#A68A64]">
-        <svg
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-          <line x1="3" y1="6" x2="21" y2="6" />
-          <path d="M16 10a4 4 0 0 1-8 0" />
-        </svg>
-      </Link>
-    </div>
-  </nav>
-);
 
 export default CartProduct;

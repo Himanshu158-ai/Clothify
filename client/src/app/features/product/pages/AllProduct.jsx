@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useProduct } from '../hooks/useProduct';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../auth/state/auth.slice';
+import NavBar from '../../../../components/NavBar';
 
 const bannerImages = [
   "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=80",
@@ -21,8 +16,6 @@ const AllProduct = () => {
   const navigate = useNavigate();
   const [hoveredProduct, setHoveredProduct] = useState(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const user = useSelector((state) => state.auth.user);
-  const dispatch = useDispatch();
 
   const handleMouseMove = (e) => {
     setMousePos({ x: e.clientX, y: e.clientY });
@@ -49,21 +42,6 @@ const AllProduct = () => {
     getProducts();
   }, [])
 
-  const logout = async () => {
-    try {
-      const res = await axios.post('http://localhost:3000/api/logout', {}, { withCredentials: true });
-
-      console.log(res.data.success);
-      if (res.data.success) {
-        dispatch(setUser(null));
-        toast.success(res.data.message, { position: "top-right" });
-        navigate("/");
-      }
-    } catch (error) {
-      toast.error("Logout failed", { position: "top-right" });
-    }
-  }
-
   const handleProductClick = (product) => {
     navigate(`/view-product/${product._id}`)
   }
@@ -71,51 +49,12 @@ const AllProduct = () => {
   return (
     <div className="min-h-screen bg-[#f9f9f9] font-sans text-[#1a1c1c]">
       {/* Navbar */}
-      <nav className="sticky top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-white/95 backdrop-blur-md border-b border-[#eeeeee]">
-        {/* Left Side: Brand */}
-        <Link to="/" className="text-xl tracking-widest uppercase font-bold text-[#1a1c1c]">
-          CLOTHIFY
-        </Link>
-
-        {/* Right Side: Links & Icons */}
-        <div className="flex items-center space-x-6 text-[#1a1c1c]">
-          <Link to="/product-create" className="text-[10px] sm:text-xs uppercase tracking-widest font-bold hover:text-[#A68A64] transition-colors">
-            Add Product
-          </Link>
-
-          {/* cart */}
-          <Link to="/cart" aria-label="Cart" className="hover:text-[#A68A64] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <path d="M16 10a4 4 0 0 1-8 0"></path>
-            </svg>
-          </Link>
-
-          {/* login Icon */}
-          {user ? (
-            <button onClick={logout} aria-label="Logout" className="hover:text-[#A68A64] transition-colors cursor-pointer">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.5"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                <polyline points="16 17 21 12 16 7"></polyline>
-                <line x1="21" y1="12" x2="9" y2="12"></line>
-              </svg>
-            </button>
-          ) : (
-            <Link to="/login" aria-label="Login" className="hover:text-[#A68A64] transition-colors">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" strokeWidth="1.5"
-                strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </Link>
-          )}
-
-        </div>
-      </nav>
+      <NavBar dynamicLinks={[
+        {
+          path: "/product-create",
+          name: "Add Products"
+        }
+      ]} />
 
       {/* Hero Banner Section */}
       <section className="relative w-full h-[60vh] md:h-[75vh] overflow-hidden bg-[#eeeeee]">
