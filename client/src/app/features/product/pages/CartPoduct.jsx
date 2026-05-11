@@ -60,14 +60,13 @@ const CartProduct = () => {
   const handleRemove = async (productId) => {
     setUpdatingId(productId);
     try {
-      await axios.delete('http://localhost:3000/api/cart/', {
-        data: { productId },
+      const res = await axios.delete(`http://localhost:3000/api/cart/${productId}`, {
         withCredentials: true,
       });
       setCartItems((prev) =>
         prev.filter((item) => item.productId._id !== productId)
       );
-      toast.success('Item removed');
+      toast.success(res.data.message);
     } catch (error) {
       toast.error(error.response?.data?.message || 'Failed to remove item');
     } finally {

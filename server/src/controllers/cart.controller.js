@@ -57,3 +57,25 @@ export const getAllCart = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }   
+
+export const deleteCart = async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const cart = await Cart.findOne({ userId: req.userId });
+        if (!cart) {
+            return res.status(404).json({ message: "Cart is empty" });
+        }
+        const itemIndex = cart.items.findIndex(
+            item => item.productId.toString() === productId
+        );
+        if (itemIndex > -1) {
+            cart.items.splice(itemIndex, 1);
+            await cart.save();
+            res.status(200).json({ message: "Item removed successfully" });
+        } else {
+            res.status(404).json({ message: "Item not found" });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
