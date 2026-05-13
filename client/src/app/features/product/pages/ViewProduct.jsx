@@ -51,10 +51,17 @@ const ProductDetail = () => {
   }, [id]);
 
   // 🔥 IMPORTANT: loading guard
-  if (!product) {
+   if (!product) {
     return (
-      <div className="h-screen flex items-center justify-center">
-        Loading...
+      <div className="min-h-screen bg-[#f9f9f9] font-sans text-[#1a1c1c] flex flex-col">
+        <div className="flex-1 flex items-center justify-center">
+          <div className="text-center">
+            <div className="w-8 h-px bg-[#A68A64] mx-auto mb-6 animate-pulse" />
+            <p className="text-[10px] uppercase tracking-[0.3em] text-[#777777]">
+              Loading product details
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
