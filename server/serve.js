@@ -24,7 +24,17 @@ app.use(cors({
 app.use(
     guardx({
         limit: 5,
-        windowMs: 10000
+        windowMs: 20000,
+
+        standardHeaders: true,
+        handler(req, res, info) {
+
+            return res.status(429).json({
+                success: false,
+                message: "Rate limit exceeded",
+            });
+
+        }
     })
 );
 
@@ -37,12 +47,12 @@ app.use(cookieParser());
 dbConnect();
 
 //routes
-app.use("/api",authRouter);
-app.use("/api/product",productRouter);
-app.use("/api/cart",cartRouter);
+app.use("/api", authRouter);
+app.use("/api/product", productRouter);
+app.use("/api/cart", cartRouter);
 
 //listner
-app.listen(config.port,() => {
+app.listen(config.port, () => {
     console.log(`Server running on port ${config.port}`)
 })
 
