@@ -7,6 +7,8 @@ import dbConnect from "./src/config/db.js"
 import passport from "./src/config/passport.js";
 import productRouter from "./src/routes/product.route.js";
 import cartRouter from "./src/routes/cart.route.js";
+import guardx from "guardx-rate-limit";
+
 
 const app = express();
 
@@ -18,6 +20,13 @@ app.use(cors({
     origin: 'http://localhost:5173',
     credentials: true
 }));
+
+app.use(
+    guardx({
+        limit: 5,
+        windowMs: 10000
+    })
+);
 
 // Body parsing middleware
 app.use(express.json());
