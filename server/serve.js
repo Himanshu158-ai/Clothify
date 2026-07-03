@@ -7,8 +7,9 @@ import dbConnect from "./src/config/db.js"
 import passport from "./src/config/passport.js";
 import productRouter from "./src/routes/product.route.js";
 import cartRouter from "./src/routes/cart.route.js";
-import guardx from "guardx-rate-limit";
-
+import guardx, { RedisStore } from "guardx-rate-limit";
+import redisClient from "./src/config/redis.js"
+// import { createClient } from "redis";
 
 const app = express();
 
@@ -17,34 +18,32 @@ app.use(passport.initialize());
 
 // CORS configuration
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: "http://localhost:5174",
     credentials: true
 }));
 
+//data base connection
+dbConnect();
+const client = await redisClient();
+
+
+
+// GuardX
 app.use(
     guardx({
         limit: 5,
-        windowMs: 20000,
-
-        standardHeaders: true,
-        handler(req, res, info) {
-
-            return res.status(429).json({
-                success: false,
-                message: "Rate limit exceeded",
-            });
-
-        }
+        windowMs: 30000,
+        store: new RedisStore(client)
     })
 );
+
 
 // Body parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-//data base connection
-dbConnect();
+
 
 //routes
 app.use("/api", authRouter);

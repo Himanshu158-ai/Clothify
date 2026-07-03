@@ -28,6 +28,9 @@ if(!process.env.IMAGEKIT_PRIVATE_KEY){
 if(!process.env.IMAGEURL_END_POINT){
     throw new Error("Environment variable IMAGEURL_END_POINT is not defined!");
 }
+if(!process.env.REDIS_URI){
+    throw new Error("Environment variable REDIS_URI is not defined!");
+}
 
 // config
 export const config = {
@@ -39,5 +42,6 @@ export const config = {
     backend_url: process.env.BACKEND_URL,
     imagekit_public_key: process.env.IMAGEKIT_PUBLIC_KEY,
     imagekit_private_key: process.env.IMAGEKIT_PRIVATE_KEY,
-    imagekit_url_end_point: process.env.IMAGEURL_END_POINT
+    imagekit_url_end_point: process.env.IMAGEURL_END_POINT,
+    redis_url: process.env.REDIS_URI
 }
